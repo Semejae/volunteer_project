@@ -17,10 +17,10 @@ class Project
   end
 
   def self.all
-    returned_project = DB.exec('SELECT * FROM volunteer_project')
+    returned_project = DB.exec('SELECT * FROM project')
     project = []
-    returned_project.each() do |project|
-      title = project.fetch('title')
+    returned_project.each() do |roject|
+      title = project.fetch('name')
       id = project.fetch('id').to_i
       project.push(Project.new({:title => title, :id => id}))
     end
@@ -43,6 +43,27 @@ class Project
     end
   end
 
+  def volunteers
+    find = Volunteer.find_by_project(self.id)
+    if find.any?
+      find
+    end
+  end
+
+  def update(attributes)
+    if(attributes.has_key?(:title)) && (attributes.fetch(:title) != nil)
+      @title = attributes.fetch(:title)
+      DB.exec("UPDATE projects SET title = '#{@title}' WHERE id = #{@id};")
+    end
+  end
+
+  def delete
+    DB.exec("DELETE FROM project WHERE id = #{@id};")
+    DB.exec("DELETE FROM volunteer WHERE project_id = #{@id};")
+  end
+
+  def self.clear
+    DB.exec('DELETE FROM projects *;')
 
 
 end
