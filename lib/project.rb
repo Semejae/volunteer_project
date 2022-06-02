@@ -1,8 +1,3 @@
-require('rspec')
-require('pg')
-require('volunteer')
-require('pry')
-
 class Project 
   attr_reader :id
   attr_accessor :title
@@ -64,6 +59,18 @@ class Project
 
   def self.clear
     DB.exec('DELETE FROM projects *;')
+  end
 
-
+  def self.search(str)
+    result = DB.exec("SELECT * FROM project WHERE title ILIKE '%#{str}%';")
+    project = []
+    result.each() do |project|
+      title = project.fetch('title')
+      id = project.fetch('id').to_i
+      project.push(Project.new({:title => title, :id => id}))
+    end
+    if project.any?
+      project
+    end
+  end
 end
