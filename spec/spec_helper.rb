@@ -3,6 +3,7 @@ require('pg')
 require('project')
 require('volunteer')
 require('pry')
+require('./test_db_access.rb')
 
 DB = PG.connect({:dbname => 'volunteer_project_test'})
 

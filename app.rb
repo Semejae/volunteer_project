@@ -1,13 +1,12 @@
 require("pg")
-
-DB = PG.connect({:dbname => "volunteer_project"})
-
 require('sinatra')
 require('sinatra/reloader')
 require('./lib/project')
 require('pry')
 require('./lib/volunteer')
 also_reload('lib/**/*.rb')
+
+DB = PG.connect({:dbname => "volunteer_project"})
 
 get('/') do
   @project = Project.all
