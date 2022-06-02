@@ -1,11 +1,7 @@
-require('respec')
-require('pg')
-require('project')
-require('volunteer')
-require('pry')
+require('spec_helper')
+
 
 describe Project do
-
   describe '#title' do
   it 'returns the title for project' do
     project = Project.new({:title => 'humpty dumpty',:id => nil})

@@ -1,15 +1,15 @@
-require('respec')
 require('pg')
+require('rspec')
 require('project')
 require('volunteer')
 require('pry')
-require('./test_db_access.rb')
+
 
 DB = PG.connect({:dbname => 'volunteer_project_test'})
 
 RSpec.configure do |config|
   config.after(:each) do
     DB.exec("DELETE FROM project *;")
-    DB.exec("DELETE FROM volunteer *;")
+    # DB.exec("DELETE FROM volunteer *;")
   end
 end
