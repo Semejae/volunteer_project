@@ -1,3 +1,9 @@
+require('respec')
+require('pg')
+require('project')
+require('volunteer')
+require('pry')
+
 class Project 
   attr_reader :id
   attr_accessor :title
@@ -12,5 +18,5 @@ class Project
   end
 
 
-  
+
 end
