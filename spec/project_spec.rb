@@ -1,4 +1,5 @@
 require('spec_helper')
+require('project')
 
 describe Project do
   describe '#title' do
@@ -51,5 +52,24 @@ describe '#save' do
   end
 end
 
+describe '.find' do
+  it 'return project by id'
+    project1 = Project.new({:title => 'humpty dumpty', :id => nil})
+    project1.save
+    project2 = Project.new({:title => 'humpty dumpty', :id => nil})
+    project2.save
+    expect(Project.find(proc.id)).to(eq(project1))
+  end
+end
 
+describe '#volunteer' do
+it 'returns all volunteers for a project' do
+  project = Project.new({:title => 'humpty dumpty', :id => nil})
+  project.save
+  volunteer1 = Volunteer.new({:name => 'Anthony', :project_id => project.id, :id => nil})
+  volunteer1.save
+  volunteer2 = Volunteer.new({:name => 'Mike', :project_id => project.id, :id => nil})
+  volunteer2.save
+  expect(project.volunteer).to(eq([volunteer1, volunteer2]))
+  end
 end
