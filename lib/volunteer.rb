@@ -73,4 +73,8 @@ end
   def self.clear
     DB.exec('DELETE FROM volunteer *;')
   end
+
+  def project
+    Project.find(@project_id)
+  end
 end

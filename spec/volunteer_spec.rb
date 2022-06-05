@@ -21,4 +21,12 @@ describe Volunteer do
   end
 end  
 
+describe '#==' do
+  it 'check for same name of volunteer' do 
+    volunteer1 = Volunteer.new({:volunteer => 'Ant', :project_id => 1, :id => nil})
+    volunteer2 = Volunteer.new({:volunteer => 'Ant', :project_id => 1, :id => nil})
+    expect(volunteer1 == volunteer2).to(eq(true))
+  end
+end
+
 end
