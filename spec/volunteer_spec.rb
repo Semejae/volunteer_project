@@ -9,15 +9,15 @@ describe Volunteer do
 
   describe '#name' do
     it 'returns volunteers name' do
-      volunteer = Volunteer.new({:name => 'Ant', :project_id => 1, :id => nil})
-      expect(volunteer.name).to(eq('Ant'))
+      practice_volunteer = Volunteer.new({:volunteer => 'Ant', :project_id => 1, :id => nil})
+      expect(practice_volunteer.volunteer).to(eq('Ant'))
     end
   end
 
   describe '#project_id' do
-  it 'returns volunteer project_id' do
-    volunteer = Volunteer.new({:name => 'Ant', :project_id => 1, :id => nil})
-    expect(volunteer.project_id).to(eq(1))
+    it 'returns volunteer project_id' do
+      volunteer = Volunteer.new({:volunteer => 'Ant', :project_id => 1, :id => nil})
+      expect(volunteer.project_id).to(eq(1))
   end
 end  
 

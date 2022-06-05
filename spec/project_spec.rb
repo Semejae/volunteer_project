@@ -1,6 +1,7 @@
 require('spec_helper')
 require('project')
 
+
 describe Project do
   describe '#title' do
   it 'returns the title for project' do
@@ -14,20 +15,23 @@ end
     project = Project.new({:title => 'humpty dumpty',:id => nil})
     expect(project.id).to(eq(nil))
   end
+end
 
   it 'returns id after saving' do
     project = Project.new({:title => 'humpty dumpty',:id => nil})
     project.save()
     expect(project.id).to(be_an_instance_of(Integer))
   end
-end
+
 
 describe '#==' do 
   it 'is the same project if title is same' do
     project1 = Project.new({:title => 'humpty dumpty', :id => nil})
-    project2 = Project.new({:title => 'BIG FOOT', :id => nil})
+    project2 = Project.new({:title => 'humpty dumpty', :id => nil})
     expect(project1 == project2).to(eq(true))
   end
+end 
+
 
 context '.all' do
   it 'is empty' do
@@ -42,7 +46,7 @@ end
     project2.save()
     expect(Project.all).to(eq([project1,project2]))
   end
-end
+
 
 describe '#save' do
   it 'saves a project to the database' do
@@ -53,12 +57,12 @@ describe '#save' do
 end
 
 describe '.find' do
-  it 'return project by id'
+  it 'return project by id' do
     project1 = Project.new({:title => 'humpty dumpty', :id => nil})
     project1.save()
     project2 = Project.new({:title => 'BIG FOOT', :id => nil})
     project2.save()
-    expect(Project.find(project.id)).to(eq(project1))
+    expect(Project.find(project1.id)).to(eq(project1))
   end
 end
 
@@ -66,11 +70,11 @@ describe '#volunteer' do
   it 'returns all volunteers for a project' do
     project = Project.new({:title => 'humpty dumpty', :id => nil})
     project.save()
-    volunteer1 = Volunteer.new({:name => 'Anthony', :project_id => project.id, :id => nil})
+    volunteer1 = Volunteer.new({:volunteer => 'Ant', :project_id => project.id, :id => nil})
     volunteer1.save()
-    volunteer2 = Volunteer.new({:name => 'Mike', :project_id => project.id, :id => nil})
+    volunteer2 = Volunteer.new({:volunteer => 'Mike', :project_id => project.id, :id => nil})
     volunteer2.save()
-    expect(project.volunteer).to(eq([volunteer1, volunteer2]))
+    expect(project.volunteers).to(eq([volunteer1, volunteer2]))
     end
   end
 
@@ -78,7 +82,7 @@ describe '#update' do
   it 'allows user to update' do 
     project = Project.new({:title => 'humpty dumpty', :id => nil})
     project.save()
-    Project.update({:title => 'humpty lumpty', :id => nil})
+    project.update({:title => 'humpty lumpty', :id => nil})
     expect(project.title).to(eq('humpty lumpty'))
   end
 end
@@ -88,7 +92,7 @@ describe '#delete' do
     project = Project.new({:title => 'humpty dumpty', :id => nil})
     project.save()
     project.delete()
-    expect(project.all).to(eq([]))
+    expect(Project.all).to(eq([]))
   end
 end
 
@@ -99,7 +103,7 @@ describe '.clear' do
     project2 = Project.new({:title => 'BIG FOOT', :id => nil})
     project2.save()
     Project.clear()
-    expect(project.all).to(eq([]))
+    expect(Project.all).to(eq([]))
   end
 end
 
@@ -110,8 +114,10 @@ describe '.search' do
     project2 = Project.new({:title => 'BIG FOOT', :id => nil})
     project2.save()
     project3 = Project.new({:title => 'TOY STORY', :id => nil})
-    expect(Project.search('TOY STORY')).to(eq([project]))
+    expect(Project.search('humpty dumpty')).to(eq([project]))
   end
+end
+
 end
 
 

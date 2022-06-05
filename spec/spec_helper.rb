@@ -9,7 +9,7 @@ DB = PG.connect({:dbname => 'volunteer_project_test'})
 
 RSpec.configure do |config|
   config.after(:each) do
-    DB.exec("DELETE FROM project *;")
-    # DB.exec("DELETE FROM volunteer *;")
+    DB.exec("DELETE FROM projects *;")
+    # DB.exec("DELETE FROM volunteers *;")
   end
 end

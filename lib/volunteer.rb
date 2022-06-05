@@ -1,70 +1,69 @@
 require('rspec')
 require('pg')
-require('volunteer')
 require('pry')
 
 class Volunteer
   attr_reader :id
-  attr_accessor :name, :project_id
+  attr_accessor :volunteer, :project_id
 
   def initialize(attributes)
     @id = attributes.fetch(:id)
-    @name = attributes.fetch(name, nil)
+    @volunteer = attributes.fetch(:volunteer)
     @project_id = attributes.fetch(:project_id)
   end
 
   def ==(volunteer_to_compare)
     if volunteer_to_compare != nil
-    (self.name() == volunteer_to_compare.name()) && (self.project_id() == volunteer_to_compare.project_id())
+    (self.volunteer() == volunteer_to_compare.volunteer()) && (self.project_id() == volunteer_to_compare.project_id())
     else
       false
     end
   end
 
   def self.all
-    returned_volunteer = DB.exec('SELECT * FROM volunteer;')
-    volunteer = []
-    returned_volunteer.each() do |volunteer|
-      name = volunteer.fetch('name')
+    returned_volunteers = DB.exec('SELECT * FROM volunteers;')
+    volunteers = []
+    returned_volunteers.each() do |volunteer|
+      volunteer = volunteer.fetch('volunteer')
       project_id = volunteer.fetch('project_id').to_i
       id = volunteer.fetch('id').to_i
-      volunteer.push(volunteer.new({:name => name, :project_id => project_id, :id => id}))
+      volunteers.push(volunteer.new({:volunteer => volunteer, :project_id => project_id, :id => id}))
     end
-    volunteer
+    volunteers
   end
 
   def save
-    result = DB.exec("INSERT INTO volunteer (name, project_id) VALUES ('#{@name}', #{@project_id}) RETURNING id;")
+    result = DB.exec("INSERT INTO volunteers (volunteer, project_id) VALUES ('#{@volunteer}', #{@project_id}) RETURNING id;")
     @id = result.first().fetch('id').to_i
   end
 
   def self.find(id)
-    volunteer = DB.exec('SELECT * FROM volunteer WHERE id = #{id};').first
+    volunteer = DB.exec('SELECT * FROM volunteers WHERE id = #{id};').first
     if volunteer
-      name = volunteer.fetch('name')
+      volunteer = volunteer.fetch('volunteer')
       project_id = volunteer.fetch('project_id').to_i
       id = volunteer.fetch('id').to_i
-      volunteer.new({:name => name, :project_id => project_id, :id => id})
+      volunteer.new({:volunteer => volunteer, :project_id => project_id, :id => id})
     else
       nil
     end
   end
 
   def self.find_by_project(pjct_id)
-    volunteer = []
-    returned_volunteer = DB.exec("SELECT * FROM volunteer WHERE project_id = #{pjct_id};")
-    returned_volunteer.each() do |volunteer|
-      name = volunteer.fetch('name')
+    volunteers = []
+    returned_volunteers = DB.exec("SELECT * FROM volunteers WHERE project_id = #{pjct_id};")
+    returned_volunteers.each() do |volunteer|
+      name = volunteer.fetch('volunteer')
       id = volunteer.fetch('id').to_i
-      volunteer.push(Volunteer.new({:name => name, :project_id => project_id, :id => id}))
+      volunteers.push(Volunteer.new({:volunteer => name, :project_id=> pjct_id, :id => id}))
   end
-  volunteer
+  volunteers
 end
 
-  def update(name, project_id)
-    @name = name
+  def update(volunteer, project_id)
+    @volunteer = volunteer
     @project_id = project_id
-      DB.exec("UPDATE volunteers SET name = '#{@name}', project_id = #{@project_id} WHERE id = #{@id};")
+      DB.exec("UPDATE volunteers SET volunteer = '#{@volunteer}', project_id = #{@project_id} WHERE id = #{@id};")
     end
 
   def delete
@@ -74,3 +73,4 @@ end
   def self.clear
     DB.exec('DELETE FROM volunteer *;')
   end
+end
