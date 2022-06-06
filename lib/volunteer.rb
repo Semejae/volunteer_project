@@ -21,15 +21,15 @@ class Volunteer
   end
 
   def self.all
-    returned_volunteers = DB.exec('SELECT * FROM volunteers;')
-    volunteers = []
-    returned_volunteers.each() do |volunteer|
-      volunteer = volunteer.fetch('volunteer')
-      project_id = volunteer.fetch('project_id').to_i
-      id = volunteer.fetch('id').to_i
-      volunteers.push(volunteer.new({:volunteer => volunteer, :project_id => project_id, :id => id}))
+    returned_volunteers = DB.exec("SELECT * FROM volunteers;")
+    vol = []
+    returned_volunteers.each() do |teer|
+      name = teer.fetch('volunteer')
+      project_id = teer.fetch('project_id').to_i
+      id = teer.fetch('id').to_i
+      vol.push(Volunteer.new({:volunteer => name, :project_id => project_id, :id => id}))
     end
-    volunteers
+    vol
   end
 
   def save
@@ -38,12 +38,12 @@ class Volunteer
   end
 
   def self.find(id)
-    volunteer = DB.exec('SELECT * FROM volunteers WHERE id = #{id};').first
+    volunteer = DB.exec("SELECT * FROM volunteers WHERE id = #{id};").first
     if volunteer
-      volunteer = volunteer.fetch('volunteer')
+      name = volunteer.fetch('volunteer')
       project_id = volunteer.fetch('project_id').to_i
       id = volunteer.fetch('id').to_i
-      volunteer.new({:volunteer => volunteer, :project_id => project_id, :id => id})
+      Volunteer.new({:volunteer => name, :project_id => project_id, :id => id})
     else
       nil
     end
