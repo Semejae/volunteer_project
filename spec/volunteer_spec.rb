@@ -68,28 +68,28 @@ describe Volunteer do
     it 'finds voluntees for projeect' do 
       project = Project.new({:title => 'Humpty Dumpty', :id =>  nil})
       project.save
-      volunteer1 = Volunteer.new({:volunteer => 'Ant', :project_id =>@project2.id, :id => nil})
+      volunteer1 = Volunteer.new({:volunteer => 'Ant', :project_id =>1, :id => nil})
       volunteer1.save()
-      volunteer2 = Volunteer.new({:volunteer => 'Kacie', :project_id =>@project2.id, :id => nil})
+      volunteer2 = Volunteer.new({:volunteer => 'Kacie', :project_id =>1, :id => nil})
       volunteer2.save()
-      expect(Volunteer.find_by_project(project2.id)).to(eq([volunteer1,volunteer2]))
+      expect(Volunteer.find_by_project(1)).to(eq([volunteer1,volunteer2]))
     end
   end
 
   describe '#update' do 
     it 'update a volunteer id' do 
-      volunteer = Volunteer.new({:volunteer => 'Ant', :project_id =>@project.id, :id => nil})
+      volunteer = Volunteer.new({:volunteer => 'Ant', :project_id =>1, :id => nil})
       volunteer.save()
-      volunteer.update('humpty lumpty', project.id)
+      volunteer.update('humpty lumpty', 1)
       expect(volunteer.volunteer).to(eq('humpty lumpty'))
     end
   end
 
   describe '#delete' do 
     it 'allows user to delete volunteer by id' do 
-      volunteer1 = Volunteer.new({:volunteer => 'Ant', :project_id =>@project.id, :id => nil})
+      volunteer1 = Volunteer.new({:volunteer => 'Ant', :project_id =>1, :id => nil})
       volunteer1.save()
-      volunteer2 = Volunteer.new({:volunteer => 'Kacie', :project_id =>@project.id, :id => nil})
+      volunteer2 = Volunteer.new({:volunteer => 'Kacie', :project_id =>1, :id => nil})
       volunteer2.save()
       volunteer1.delete()
       expect(Volunteer.all).to(eq([volunteer2]))
@@ -98,7 +98,7 @@ describe Volunteer do
 
   describe '#project' do 
     it 'finds the project a volunteer belongs to' do
-      volunteer = Volunteer.new({:volunteer => 'Ant', :project_id =>@project.id, :id => nil})
+      volunteer = Volunteer.new({:volunteer => 'Ant', :project_id =>1, :id => nil})
       volunteer.save()
       expect(volunteer.project()).to(eq(@project))
     end
@@ -106,9 +106,9 @@ describe Volunteer do
 
   describe '.clear' do 
     it 'clear all volunteers' do 
-      volunteer = Volunteer.new({:volunteer => 'Ant', :project_id =>@project.id, :id => nil})
+      volunteer = Volunteer.new({:volunteer => 'Ant', :project_id =>1, :id => nil})
       volunteer.save()
-      volunteer2 = Volunteer.new({:volunteer => 'Kacie', :project_id =>@project.id, :id => nil})
+      volunteer2 = Volunteer.new({:volunteer => 'Kacie', :project_id =>1, :id => nil})
       volunteer2.save()
       Volunteer.clear()
       expect(Volunteer.all).to(eq([]))

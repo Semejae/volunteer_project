@@ -50,14 +50,14 @@ class Volunteer
   end
 
   def self.find_by_project(pjct_id)
-    volunteers = []
+    vol = []
     returned_volunteers = DB.exec("SELECT * FROM volunteers WHERE project_id = #{pjct_id};")
-    returned_volunteers.each() do |volunteer|
-      name = volunteer.fetch('volunteer')
-      id = volunteer.fetch('id').to_i
-      volunteers.push(Volunteer.new({:volunteer => name, :project_id=> pjct_id, :id => id}))
+    returned_volunteers.each() do |teer|
+      name = teer.fetch('volunteer')
+      id = teer.fetch('id').to_i
+      vol.push(Volunteer.new({:volunteer => name, :project_id=> pjct_id, :id => id}))
   end
-  volunteers
+  vol
 end
 
   def update(volunteer, project_id)
@@ -67,11 +67,11 @@ end
     end
 
   def delete
-    DB.exec("DELETE FROM volunteer WHERE id = #{@id};")
+    DB.exec("DELETE FROM volunteers WHERE id = #{@id};")
   end
 
   def self.clear
-    DB.exec('DELETE FROM volunteer *;')
+    DB.exec('DELETE FROM volunteers *;')
   end
 
   def project
