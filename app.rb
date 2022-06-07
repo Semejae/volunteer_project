@@ -9,12 +9,12 @@ also_reload('lib/**/*.rb')
 DB = PG.connect({:dbname => "volunteer_project"})
 
 get('/') do
-  @project = Project.all
+  @projects = Project.all
   erb(:projects)
 end
 
 get('/project') do
-  @project = Project.all
+  @projects = Project.all
   erb(:projects)
 end
 
@@ -27,30 +27,30 @@ get('/project/:id') do
   erb(:project)
 end
 
-post('/project') do
-  name = params[:project_name]
-  name = Project.new(name, nil)
-  name.save()
-  @project = Project.all()
+post('/projects') do
+  title = params[:project_name]
+  project = Project.new(:title => title, :id => nil)
+  project.save()
+  @projects = Project.all()
   erb(:projects)
 end
 
-get('/project/:id/edit') do
+get('/projects/:id/edit') do
   @project = Project.find(params[:id].to_i())
   erb(:edit_project)
 end
 
 patch('/project/:id') do
   @project = Project.find(params[:id].to_i())
-  @project.update(params[:name])
-  @project = Project.all
+  @project.update(params[:title])
+  @projects = Project.all
   erb(:projects)
 end
 
 delete('/project/:id') do
   @project = Project.find(params[:id].to_i())
   @project.delete()
-  @project = project.all
+  @projects = Project.all
   erb(:projects)
 end
 

@@ -2,10 +2,10 @@
 
 <h3>project and volunteer</h3>
 
-<% if @project.any? %>
+<% if @projects.any? %>
   <ul>
-    <% @project.each do |project| %>
-      <li><%= project.name %></li>
+    <% @projects.each do |project| %>
+      <li><a href="/project/<%= project.id %>"><%= project.title %></li>
     <% end %>
   </ul>
 <% else %>
@@ -22,6 +22,3 @@
   <button type="submit" class="btn">Go!</button>
 </form>
 
-<% @project.each do |project| %>
-  <li><a href="/project/<%= project.id %>"><%= project.name %></a></li>
-<% end %>
