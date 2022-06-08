@@ -5,7 +5,7 @@
   <% if @project.volunteer %>
     <ul>
       <% @project.volunteer.each do |volunteer| %>
-        <li><a href="/project/<%= @project.id %>/volunteer/<%= volunteer.id %>"><%= volunteer.name %></a></li>
+        <li><a href="/projects/<%= @project.id %>/volunteer/<%= volunteer.id %>"><%= volunteer.name %></a></li>
       <% end %>
     </ul>
   <% else %>
@@ -14,7 +14,7 @@
 
 <h4>Add a volunteer:</h4>
 
-<form action="/project/<%= @project.id %>/volunteer" method="post">
+<form action="/projects/<%= @project.id %>/volunteer" method="post">
   <div class="form-group">
     <label for="volunteer_name">volunteer</label>
     <input id="volunteer_name" name="volunteer_name" class="form-control" type="text">
@@ -24,5 +24,5 @@
 
 
 
-<p><a href="/project/<%= @project.id %>/edit">Edit project</a></p>
-<p><a href="/project">Return to project list</a></p>
+<p><a href="/projects/<%= @project.id %>/edit">Edit project</a></p>
+<p><a href="/projects">Return to project list</a></p>
